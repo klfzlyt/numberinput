@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="jquery,ui,easy,easyui,web">
+	<meta name="description" content="easyui help you build your web page easily!">
+
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
+	<link rel="stylesheet" href="css/layout.css" />
+</head>
+<body>
+	
+	
+	<div style="margin:20px 0;"></div>
+	<div class="easyui-layout" style="width:100%;height:350px;">
+		<div id="p" data-options="region:'west'" title="West" style="width:30%;padding:10px">
+			<div class="easyui-panel" style="padding:5px">
+		<ul class="easyui-tree">
+			<li>
+				<span>My Documents</span>
+				<ul>
+					<li data-options="state:'closed'">
+						<span>Photos</span>
+						<ul>
+							<li>
+								<span>Friend</span>
+							</li>
+							<li>
+								<span>Wife</span>
+							</li>
+							<li>
+								<span>Company</span>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span>Program Files</span>
+						<ul>
+							<li>Intel</li>
+							<li>Java</li>
+							<li>Microsoft Office</li>
+							<li style="background: url(img/cursor.gif);">Games</li>
+						</ul>
+					</li>
+					<li>index.html</li>
+					<li>about.html</li>
+					<li>welcome.html</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+		</div>
+		<div data-options="region:'center'" title="Center">
+			<div id="digital1" style="float: left;"></div>
+			<div id="digital2" style="float: left;"></div>
+			<div id="digital3" style="float: left;"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery.js" ></script>
+	<script type="text/javascript" src="js/easyui.js" ></script>
+	<script type="text/javascript" src="js/boot.js" ></script>
+	<script>
+		$(document).ready(function(){
+			$.number_input({
+				render_To:'#digital1',
+				number_of_input:2,
+				validator:function(charcode){
+					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
+					else return false;
+				}
+			});
+			$.number_input({
+				render_To:'#digital2',
+				number_of_input:6,
+				validator:function(charcode){
+					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
+					else return false;
+				}
+			});
+			$.number_input({
+				render_To:'#digital3',
+				number_of_input:8,
+				validator:function(charcode){
+					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
+					else return false;
+				}
+			});
+		})	
+	</script>
+</body>
+</html>
