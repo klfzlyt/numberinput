@@ -8,6 +8,7 @@
     height: 14px;
     border: 1px solid #cccccc;
     border-radius: 2px;
+    margin:0 10px
 }
 .digital_Container b{
 	display: block;

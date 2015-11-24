@@ -1,6 +1,6 @@
 (function($) {
-	$.extend({
-
+		$.fn.numberinput={};
+	$.extend($.fn.numberinput,{
 		number_input: function(setting) {
 			//default setting
 			var param = $.extend({
@@ -9,6 +9,7 @@
 					width: 29,
 					height: 7
 				},
+				cursorenabled:false,
 				activeCssName: "active",
 				containerCSSName: "digital_Container",
 				digitalCssName: "digital",
@@ -56,7 +57,7 @@
 			var $input = $('<input type="text" tabindex="" id="payPassword_rsainput" name="payPassword_rsainput" class="" oncontextmenu="return true" onpaste="return false" oncopy="return true" oncut="return false" autocomplete="off" value="" maxlength="' + param.number_of_input + '" minlength="' + param.number_of_input + '" style="margin-left: -999px">')
 				.appendTo(container);
 			$input.val(char_arr.join(""));
-			var number_container = $('<div></div>').appendTo(container);
+			var number_container = $('<div class="children"></div>').appendTo(container);
 			container.css('width', (param.inputsize.width + 1) * param.number_of_input + 'px');
 			$input.bind("keydown", function(e) {
 
@@ -163,6 +164,7 @@
 					.css('width', param.inputsize.width + 'px')
 					.appendTo(number_container);
 				number_arr.push($(sliderbar.children('b')[0]));
+				if(param.cursorenabled){
 				sliderbar
 					.bind("click", function() {
 						//console.log("click");
@@ -187,12 +189,31 @@
 							$(collec[numberindex]).addClass(param.activeCssName);
 
 					});
+					}
 
 			}
 
 
 
-
+			return container;
+		},
+		set_number_of_container:function(number){
+			//this.remove('.children');
+			var numm=this[0].childNodes.length;
+			for(var i=0;i<numm;++i){
+			this[0].removeChild(this[0].childNodes[0])
+			}
+				$.fn.numberinput.number_input({
+				render_To:this,
+				number_of_input:number,
+				validator:function(charcode){
+					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
+					else return false;
+				}
+			});
+			
+			
+			
 		}
 
 	});

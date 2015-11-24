@@ -1,94 +1,194 @@
 <!DOCTYPE html>
 <html>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="keywords" content="jquery,ui,easy,easyui,web">
-	<meta name="description" content="easyui help you build your web page easily!">
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html>
 
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
-	<link rel="stylesheet" href="css/layout.css" />
-</head>
-<body>
-	
-	
-	<div style="margin:20px 0;"></div>
-	<div class="easyui-layout" style="width:100%;height:350px;">
-		<div id="p" data-options="region:'west'" title="West" style="width:30%;padding:10px">
-			<div class="easyui-panel" style="padding:5px">
-		<ul class="easyui-tree">
-			<li>
-				<span>My Documents</span>
-				<ul>
-					<li data-options="state:'closed'">
-						<span>Photos</span>
-						<ul>
-							<li>
-								<span>Friend</span>
-							</li>
-							<li>
-								<span>Wife</span>
-							</li>
-							<li>
-								<span>Company</span>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<span>Program Files</span>
-						<ul>
-							<li>Intel</li>
-							<li>Java</li>
-							<li>Microsoft Office</li>
-							<li style="background: url(img/cursor.gif);">Games</li>
-						</ul>
-					</li>
-					<li>index.html</li>
-					<li>about.html</li>
-					<li>welcome.html</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="keywords" content="jquery,ui,easy,easyui,web">
+		<meta name="description" content="easyui help you build your web page easily!">
+
+		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
+		<link rel="stylesheet" href="css/layout.css" />
+	</head>
+
+	<body>
+
+		<div style="margin:20px 0;"></div>
+		<div class="easyui-layout" style="width:100%;height:550px;">
+			<div data-options="region:'west'" title="West" style="width:30%;padding:10px">
+				<div class="easyui-panel" style="padding:5px">
+					<ul id="tt" class="easyui-tree" data-options="
+							url: './json/data.json',
+							method: 'get',
+							animate: true,
+							dnd:false,
+							lines:true,
+							onContextMenu: function(e,node){
+								e.preventDefault();
+								$(this).tree('select',node.target);
+								$('#mm').menu('show',{
+									left: e.pageX,
+									top: e.pageY
+								});
+							},
+							formatter:function(node){
+						var s = node.text;
+						if (node.children){//这里可能要做一些兼容性处理
+							s += ' <span style=\'color:blue\'>(' + node.children.length + ')</span>';
+						}
+						return s;
+						},
+						onClick: function(node){
+					$(this).tree('beginEdit',node.target);
+				},
+				onSelect:function(node){
+					//alert(node.text)
+				}
+						"></ul>
+					<div id="mm" class="easyui-menu" style="width:120px;">
+						<div onclick="append_slingber()" data-options="iconCls:'icon-add'">同一级增加</div>
+						<div onclick="append()" data-options="iconCls:'icon-add'">下一级增加</div>
+						<div onclick="removeit()" data-options="iconCls:'icon-remove'">移除</div>
+						<div class="menu-sep"></div>
+						<div onclick="expand()">展开</div>
+						<div onclick="collapse()">收缩</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div data-options="region:'center'" title="Center">
+				<div class="easyui-layout" data-options="fit:true">
+					<div data-options="region:'north',fit:true">
+						<!--<div style="float: left;">
+							<div id="digital1" style="margin-bottom: 10px;"></div>
+							<div style="margin-left: 20px;float: left;">
+								<input class="easyui-slider" style="width:100px" data-options="
+												showTip:true,
+												rule: [1,'|',5,'|',10,'|',15,'|',20],
+												max:20,
+												min:1,
+												onChange:function(old,newvalue){
+													nun.numberinput.set_number_of_container.call(nun,old);
+													//console.log(old);
+												}
+											">
+							</div>
+						</div>
+						<div style="float: left;">
+							<div id="digital2" style="margin-bottom: 10px;"></div>
+							<div style="margin-left: 20px;float: left;">
+								<input class="easyui-slider" style="width:100px" data-options="
+												showTip:true,
+												rule: [1,'|',5,'|',10,'|',15,'|',20],
+												max:20,
+												min:1,
+												onChange:function(old,newvalue){
+													nun1.numberinput.set_number_of_container.call(nun1,old);
+												//	console.log(old);
+												}
+											">
+							</div>
+			 
+				 
+						</div>-->
+					
+						<div><button id="test123">asdada</button></div>	
+						<div id="test1234"></div>
+					</div>
+					
+					
+					
+					
+
+					<div data-options="region:'south'" split="true" border="true" style="height:160px;">
+
+					</div>
+				</div>
+			</div>
+
 		</div>
-		<div data-options="region:'center'" title="Center">
-			<div id="digital1" style="float: left;"></div>
-			<div id="digital2" style="float: left;"></div>
-			<div id="digital3" style="float: left;"></div>
-		</div>
-	</div>
-	<script type="text/javascript" src="js/jquery.js" ></script>
-	<script type="text/javascript" src="js/easyui.js" ></script>
-	<script type="text/javascript" src="js/boot.js" ></script>
-	<script>
-		$(document).ready(function(){
-			$.number_input({
-				render_To:'#digital1',
-				number_of_input:2,
-				validator:function(charcode){
-					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
-					else return false;
-				}
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
+		<script language="javascript" type="text/javascript" src="js/boot.js"></script>
+		<script language="javascript" type="text/javascript" src="js/tabnumber.js" ></script>
+		<script language="javascript" type="text/javascript">
+		
+			$(document).ready(function() {
+				$('#test1234').tabnumber({width:400});
+				$('#test123').bind('click',function(e){
+					e.preventDefault();
+					$('#test1234').tabnumber('add_Item',{});
+				});
+				
+				
+				
+//				window.nun = $.fn.numberinput.number_input({
+//					render_To: '#digital1',
+//					number_of_input: 2,
+//					validator: function(charcode) {
+//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
+//						else return false;
+//					}
+//				});
+//				nun.numberinput.set_number_of_container.call(nun,4);
+//				window.nun1 = $.fn.numberinput.number_input({
+//					render_To: '#digital2',
+//					number_of_input: 2,
+//					validator: function(charcode) {
+//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
+//						else return false;
+//					}
+//				});
+			})
+		</script>
+		<script type="text/javascript">
+			function append_slingber() {
+				var t = $('#tt');
+				var node = t.tree('getSelected');
+				t.tree('append', {
+					parent: (node ? $(node.target).parents('li').eq(1).children('div').first() : null),
+					data: [{
+						text: '新条目'
+					}]
+				});
+			}
+
+			function append() {
+				var t = $('#tt');
+				var node = t.tree('getSelected');
+				t.tree('append', {
+					parent: (node ? node.target : null),
+					data: [{
+						text: '新条目'
+					}]
+				});
+			}
+
+			function removeit() {
+				var node = $('#tt').tree('getSelected');
+				$('#tt').tree('remove', node.target);
+			}
+
+			function collapse() {
+				var node = $('#tt').tree('getSelected');
+				$('#tt').tree('collapse', node.target);
+			}
+
+			function expand() {
+				var node = $('#tt').tree('getSelected');
+				$('#tt').tree('expand', node.target);
+			}
+		</script>
+		<script type="text/javascript" src="js/tree.js"></script>
+		<script type="text/javascript">
+			$('#tt').tree('selectedchanged', function(prenode, nownode) {
+				//console.log("prenode", prenode);
+				//console.log("nownode", nownode);
 			});
-			$.number_input({
-				render_To:'#digital2',
-				number_of_input:6,
-				validator:function(charcode){
-					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
-					else return false;
-				}
-			});
-			$.number_input({
-				render_To:'#digital3',
-				number_of_input:8,
-				validator:function(charcode){
-					if(/[0-9A-Za-z]/.test(String.fromCharCode(charcode)))return true;
-					else return false;
-				}
-			});
-		})	
-	</script>
-</body>
-</html>
+		</script>
+	</body>
+
+	</html>
