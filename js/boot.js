@@ -9,6 +9,7 @@
 					width: 29,
 					height: 7
 				},
+				inputenabled:false,
 				cursorenabled:false,
 				activeCssName: "active",
 				containerCSSName: "digital_Container",
@@ -54,7 +55,7 @@
 				char_arr.push('_');
 			}
 			container.addClass(param.containerCSSName);
-			var $input = $('<input type="text" tabindex="" id="payPassword_rsainput" name="payPassword_rsainput" class="" oncontextmenu="return true" onpaste="return false" oncopy="return true" oncut="return false" autocomplete="off" value="" maxlength="' + param.number_of_input + '" minlength="' + param.number_of_input + '" style="margin-left: -999px">')
+			var $input = $('<input type="text" tabindex="" id="payPassword_rsainput" name="payPassword_rsainput" class="" oncontextmenu="return true" onpaste="return false" oncopy="return true" oncut="return false" autocomplete="off" value="" maxlength="' + param.number_of_input + '" minlength="' + param.number_of_input + '" style="margin-left: -99999999999999999999999999999999px">')
 				.appendTo(container);
 			$input.val(char_arr.join(""));
 			var number_container = $('<div class="children"></div>').appendTo(container);

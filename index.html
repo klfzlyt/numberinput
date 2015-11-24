@@ -15,7 +15,6 @@
 
 	<body>
 
-		<div style="margin:20px 0;"></div>
 		<div class="easyui-layout" style="width:100%;height:550px;">
 			<div data-options="region:'west'" title="West" style="width:30%;padding:10px">
 				<div class="easyui-panel" style="padding:5px">
@@ -61,8 +60,14 @@
 
 			<div data-options="region:'center'" title="Center">
 				<div class="easyui-layout" data-options="fit:true">
-					<div data-options="region:'north',fit:true">
-						<!--<div style="float: left;">
+					<div data-options="region:'north',fit:true" id="number_content">
+						<div style="height: 400px; width: 100%;" class="easyui-panel" title="Custom Panel Tools" data-options="iconCls:'icon-help',closable:false,tools:'#tt1',toolPosition:'left'">
+							<div id="tt1">
+								<a href="javascript:void(0)" class="icon-add" id="add_btn" style="margin-left: 20px;"></a>
+								<a href="javascript:void(0)" class="icon-remove" id="delete_btn" style="margin-left: 20px;"></a>
+							</div>
+
+							<!--<div style="float: left;">
 							<div id="digital1" style="margin-bottom: 10px;"></div>
 							<div style="margin-left: 20px;float: left;">
 								<input class="easyui-slider" style="width:100px" data-options="
@@ -94,17 +99,30 @@
 			 
 				 
 						</div>-->
-					
-						<div><button id="test123">asdada</button></div>	
-						<div id="test1234"></div>
+
+							<div id="test1234" class="clearfix">
+
+							</div>
+
+						</div>
 					</div>
-					
-					
-					
-					
 
-					<div data-options="region:'south'" split="true" border="true" style="height:160px;">
+					<div data-options="region:'south'" split="true" border="true" style="height:360px;">
 
+						<div id="table_tab" class="easyui-tabs" style="width:100%;height:350px" data-options="
+							fit:true,
+							onSelect:function(title,index1){
+								//console.log(index1);
+								$('#test1234').tabnumber('set_active',{																		
+										index:index1									
+								});
+							},
+							onAdd:function(title,index){
+								//console.log('onadd');
+							}
+							">
+
+						</div>
 					</div>
 				</div>
 			</div>
@@ -113,37 +131,89 @@
 		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 		<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
 		<script language="javascript" type="text/javascript" src="js/boot.js"></script>
-		<script language="javascript" type="text/javascript" src="js/tabnumber.js" ></script>
+		<script language="javascript" type="text/javascript" src="js/tabnumber.js"></script>
+
 		<script language="javascript" type="text/javascript">
-		
 			$(document).ready(function() {
-				$('#test1234').tabnumber({width:400});
-				$('#test123').bind('click',function(e){
-					e.preventDefault();
-					$('#test1234').tabnumber('add_Item',{});
+				$('#test1234').tabnumber({
+					width: 400,
+					onclick: function(e) {
+						$('#table_tab').tabs('select', e);
+					}
 				});
-				
-				
-				
-//				window.nun = $.fn.numberinput.number_input({
-//					render_To: '#digital1',
-//					number_of_input: 2,
-//					validator: function(charcode) {
-//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
-//						else return false;
-//					}
-//				});
-//				nun.numberinput.set_number_of_container.call(nun,4);
-//				window.nun1 = $.fn.numberinput.number_input({
-//					render_To: '#digital2',
-//					number_of_input: 2,
-//					validator: function(charcode) {
-//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
-//						else return false;
-//					}
-//				});
+				index = 0;
+				$('#add_btn').bind('click', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					$('#test1234').tabnumber('add_Item', {});
+					$('#table_tab').tabs('add', {
+						title: 'Tab' + index,
+						content: '<div id="tab_maincontent_' + index + '"><select id="cc" style="width:150px"></select><div id="sp"><div style="color:#99BBE8;background:#fafafa;padding:5px">Select a language</div><div style="padding:10px"><input type="radio" name="lang" value="01"><span>固定</span><br><input type="radio" name="lang" value="02"><span>流水</span><br><input type="radio" name="lang" value="03"><span>字典</span><br><input type="radio" name="lang" value="04"><span>自定义</span><br></div></div><div id="tab_content"><div id="fixed_1"><h3>固定</h3><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div><div id="liushui_2"><h3>流水</h3><div class="easyui-panel" style="padding:5px"><a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a></div><div><span>流水初始值：</span><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div></div><div id="dic_3"><h3>字典</h3></div><div id="custom_4"><h3>自定义</h3></div></div></div>',
+						closable: false
+					});
+					setTimeout(function() {
+						//console.log("click");
+						var strtemp = '#tab_maincontent_' + index;
+						$(strtemp + ' #tab_content>div').hide();
+						$(strtemp + ' #cc').combo({
+							required: true,
+							editable: false,
+							onChange: function(newvalue, oldvalue) {
+								$(strtemp + ' #tab_content>div').hide();
+								if (newvalue == '01') {
+									$(strtemp + ' #fixed_1').show();
+								}
+								if (newvalue == '02') {
+									$(strtemp + ' #liushui_2').show();
+								}
+								if (newvalue == '03') {
+									$(strtemp + ' #dic_3').show();
+								}
+								if (newvalue == '04') {
+									$(strtemp + ' #custom_4').show();
+								}
+							}
+						});
+						$('#sp').appendTo($(strtemp + ' #cc').combo('panel'));
+						$('#sp input').click(function() {
+							var v = $(this).val();
+							var s = $(this).next('span').text();
+							$(strtemp + ' #cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
+						});
+						index++;
+					}, 0)
+				});
+				$('#delete_btn').bind('click', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					var length = $('#test1234').children("div.Item").length;
+					$('#test1234').tabnumber('remove_Item', {});
+					$('#table_tab').tabs('close', length - 1);
+				});
+				$('#number_content').bind('click', function(e) {
+					e.stopPropagation();
+					$('#test1234').children("div.Item").removeClass('ttttt');
+				});
+				//				window.nun = $.fn.numberinput.number_input({
+				//					render_To: '#digital1',
+				//					number_of_input: 2,
+				//					validator: function(charcode) {
+				//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
+				//						else return false;
+				//					}
+				//				});
+				//				nun.numberinput.set_number_of_container.call(nun,4);
+				//				window.nun1 = $.fn.numberinput.number_input({
+				//					render_To: '#digital2',
+				//					number_of_input: 2,
+				//					validator: function(charcode) {
+				//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
+				//						else return false;
+				//					}
+				//				});
 			})
 		</script>
+
 		<script type="text/javascript">
 			function append_slingber() {
 				var t = $('#tt');

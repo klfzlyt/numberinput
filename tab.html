@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
+	</head>
+	<body>
+				<div  class="tab_maincontent_0">
+								<select id="cc" style="width:150px"></select>
+								<div class="sp">
+									<div style="color:#99BBE8;background:#fafafa;padding:5px;">Select a language</div>
+									<div style="padding:10px">
+										<input type="radio" name="lang" value="01" class="input_t"><span>固定</span>
+										<br/>
+										<input type="radio" name="lang" value="02" class="input_t"><span>流水</span>
+										<br/>
+										<input type="radio" name="lang" value="03" class="input_t"><span>字典</span>
+										<br/>
+										<input type="radio" name="lang" value="04" class="input_t"><span>自定义</span>
+									</div>
+								</div>
+								<div id="tab_content">
+									<div id="fixed_1">
+										<h3>固定</h3>
+										<input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px;">
+									</div>
+									<div id="liushui_2">
+										<h3>流水</h3>
+											<div class="easyui-panel" style="padding:5px;">
+												<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a>
+												<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a>
+												<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a>
+						
+											</div>
+											<div>
+												<span>流水初始值： </span><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px;">
+											</div>
+									</div>
+									<div id="dic_3">
+										<h3>字典</h3>
+										
+									</div>
+									<div id="custom_4">
+										<h3>自定义</h3>
+										
+									</div>
+								</div>
+							</div>
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
+		<script type="text/javascript">
+				$(function(){
+					index=0;
+					var strtemp = '.tab_maincontent_' + index;
+						$(strtemp + ' #tab_content>div').hide();
+						var sssss=strtemp + ' #cc';
+						$(strtemp+' #cc').combo({
+							required: true,
+							editable: false,
+							onChange: function(newvalue, oldvalue) {
+								console.log(newvalue);
+								$(strtemp + ' #tab_content>div').hide();
+								if (newvalue == '01') {
+									$(strtemp + ' #fixed_1').show();
+								}
+								if (newvalue == '02') {
+									$(strtemp + ' #liushui_2').show();
+								}
+								if (newvalue == '03') {
+									$(strtemp + ' #dic_3').show();
+								}
+								if (newvalue == '04') {
+									$(strtemp + ' #custom_4').show();
+								}
+							}
+						});
+						$(strtemp+' .sp').appendTo($(strtemp+' #cc').combo('panel'));
+						var stttt=strtemp+" .sp input[type=radio]";
+						$(stttt).on('click',function(e) {
+							e.preventDefault();
+							var v = $(this).val();
+							var s = $(this).next('span').text();
+							$(strtemp + ' #cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
+						});
+						index++;
+				});
+			</script>
+	</body>
+</html>
