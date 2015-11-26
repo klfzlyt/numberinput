@@ -1,32 +1,46 @@
+//(c) Copyright 2015 lyt. All Rights Reserved. 2015-11-26
 (function($) {
 
 	$.fn.tabnumber = function(setting, o) {
 		if (typeof setting == "string") {
-			$.fn.tabnumber.methods[setting].call(this, o);
+		return	$.fn.tabnumber.methods[setting].call(this, o);
 		}
 		if (typeof setting == 'object') {
 			var param = $.extend({
 				render_To: this,
 				input_width: 300,
-				activeclass: "tabnumber_activeclass",
-				onclick:function(e){}
-			}, setting);
+				activeclass: "tabnumber_activeclass"
+			}, setting);								
+			var property_data=$.extend({},this.tabnumber.default.property,this.tabnumber.default.callbacks,param);
+			
+			this.each(function(i){
+			$.data(this,'tabnumber',property_data);	
+			});
+			var ruls=this.data('tabnumber').rules;
+			for (var i = 0; i < ruls.length; i++) {
+				$.fn.tabnumber.methods['add_Item'].call(this,{length:ruls[i]});
+			}
 			
 			
-			$.extend(this.tabnumber.callbacks,{"onclick":param.onclick});
-			
-			
-
 		}
 	};
-	$.fn.tabnumber.callbacks={};
+	$.fn.tabnumber.default={};
+	$.fn.tabnumber.default.property={
+		rules:[0]
+	};
+	$.fn.tabnumber.default.callbacks={
+		onadd:function(item){},
+		onclick:function(item){}
+	};
 	$.fn.tabnumber.methods = {};
 	$.extend($.fn.tabnumber.methods, {
 		add_Item: function(setting) {
 			var param = $.extend({
-				activeclassName:'ttttt'
+				activeclassName:'ttttt',
+				length:1,
+				index:0
 			}, setting);
-			
+			if(param.length<=0)return;
 			var THIs = this;
 			
 			var container = $('<div class="Item" style="float:left"></div>')
@@ -46,29 +60,30 @@
 						for (var i = 0; i < childrens.length; i++) {
 							if($(childrens[i]).hasClass(param.activeclassName)){
 								//THIS & this
-								THIs.tabnumber.callbacks.onclick.call(this,i);
+								THIs.data('tabnumber').onclick.call(this,i);
 							}
 						}
 			});
 			var numberinput = $('<div></div>').appendTo(container);
 			var hover_container=$('<div style="margin-left: 20px;"></div>').appendTo(container).hide();
-			
-			container.appendTo(THIs);
-			
-			var numberinput_1=$.fn.numberinput.number_input({
+				var numberinput_1=$.fn.numberinput.number_input({
 				render_To: numberinput,
-				number_of_input: 1,
+				number_of_input: param.length,
 			});
 		
-			$('<input style="width:100px"/>').appendTo(hover_container).slider({
+			$('<input id="input_slider_'+param.index+'" style="width:100px"/>').appendTo(hover_container).slider({
 				showTip: true,
 				rule: [1, '|', 5, '|', 10, '|', 15, '|', 20],
 				max: 20,
 				min: 1,
+				value:param.length,
 				onChange: function(old, newvalue) {					
 						numberinput_1.numberinput.set_number_of_container.call(numberinput_1,old);
 				}
 			});
+			container.appendTo(THIs);
+			THIs.data('tabnumber').onadd.call(THIs,container);
+		
 
 		},
 		remove_Item: function(setting) {
@@ -88,7 +103,8 @@
 				activeclassName:'ttttt'
 			},setting);
 			var childrens=THIS.children("div.Item").removeClass(param.activeclassName);
-			$(childrens[param.index]).addClass(param.activeclassName);		
+			$(childrens[param.index]).addClass(param.activeclassName);	
+			THIS.data('tabnumber').onclick.call(THIS,param.index);
 		},
 		get_selected:function(setting){
 			var param = $.extend({
@@ -98,7 +114,32 @@
 			for (var i = 0; i < children.length; i++) {
 				if($(children[i]).hasClass(param.activeclassName))return i;
 			}
+			return 0;
+		},
+		clear_all:function(setting){
+				var le=this.children("div.Item").length;
+				while(le--){
+			$.fn.tabnumber.methods['remove_Item'].call(this, setting);
+			}			
+		},
+		get_length:function(setting){			
+			return this.children("div.Item").length;
+		},
+		get_rule:function(setting){
+			var param=$.extend({
+				index:0
+			},setting);
+			return $('#input_slider_'+param.index).slider('getValue');					
+		},
+		get_rules:function(setting){
+			var length=$.fn.tabnumber.methods['get_length'].call(this,setting);
+			var result=[];
+			for (var i = 0; i < length; i++) {
+				result.push($.fn.tabnumber.methods['get_rule'].call(this,{index:i}));
+			}
+			return result;
 		}
+		
 		
 	});
 })(jQuery)

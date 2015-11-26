@@ -1,3 +1,4 @@
+//(c) Copyright 2015 lyt. All Rights Reserved. 2015-11-26
 (function($) {
 		$.fn.numberinput={};
 	$.extend($.fn.numberinput,{

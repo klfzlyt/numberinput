@@ -12,6 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="css/icons.css">
 		<link rel="stylesheet" href="css/layout.css" />
 	</head>
+	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
 
 	<body>
 
@@ -71,109 +73,106 @@
 					</div>
 
 					<div data-options="region:'south'" split="true" border="true" style="height:360px;">
-						<div id="table_tab" class="easyui-tabs" style="width:100%;height:350px" data-options="
-							fit:true,
-							onSelect:function(title,index12){
-								//console.log(index1);
-								index1=index12;
-								$('#test1234').tabnumber('set_active',{																		
-										index:index12									
-								});
-							},
-							onAdd:function(title,index){
-								//console.log('onadd');
-							}
-							"></div>
+						<div id="table_tab" class="easyui-tabs" style="width:100%;height:350px"></div>
+
 					</div>
 				</div>
 			</div>
 
 		</div>
-		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
-		<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
+	
 		<script language="javascript" type="text/javascript" src="js/boot.js"></script>
 		<script language="javascript" type="text/javascript" src="js/tabnumber.js"></script>
 		<script language="javascript" type="text/javascript" src="js/tree.js"></script>
+		<script language="javascript" type="text/javascript" src="js/tabs.js"></script>
 		<script language="javascript" type="text/javascript">
 			$(document).ready(function() {
-				index1=0;
+				index1 = 0;
+				selected_index = 0;
+				
+				var $tab_main = $.ajax({
+				  url: "tabcontent.html",
+				  async: false
+				}).responseText; 
+				//var $tab_main = $('#tab_maincontent').css("display", "block").parent().html();
+				
+				$tab_main=$tab_main.replace('none','block');
+				
+				$('#table_tab').tabs({
+					fit: true,
+					onSelect: function(title, index12) {
+						//console.log(index1);
+						index1 = index12;
+						$('#test1234').tabnumber('set_active', {
+							index: index12
+						});
+					},
+					onAdd: function(title, index) {
+						//console.log('onadd');
+					}
+				});
 				$('#test1234').tabnumber({
 					width: 400,
 					onclick: function(e) {
 						$('#table_tab').tabs('select', e);
-						index1=e;
+						index1 = e;
+						//	console.log('testes');
 					}
 				});
 				index = 0;
 				$('#add_btn').bind('click', function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					$('#test1234').tabnumber('add_Item', {});
+					$('#test1234').tabnumber('add_Item', {index:index});
 					//content: '<div id="tab_maincontent_' + index + '"><select id="cc" style="width:150px"></select><div id="sp_'+index+'"><div style="color:#99BBE8;background:#fafafa;padding:5px">Select a language</div><div style="padding:10px"><input type="radio" name="lang" value="01"><span>固定</span><br><input type="radio" name="lang" value="02"><span>流水</span><br><input type="radio" name="lang" value="03"><span>字典</span><br><input type="radio" name="lang" value="04"><span>自定义</span><br></div></div><div id="tab_content"><div id="fixed_1"><h3>固定</h3><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div><div id="liushui_2"><h3>流水</h3><div class="easyui-panel" style="padding:5px"><a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a></div><div><span>流水初始值：</span><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div></div><div id="dic_3"><h3>字典</h3></div><div id="custom_4"><h3>自定义</h3></div></div></div>',
-					$('#table_tab').tabs('add', {
-						title: 'Tab' + index,
-						content: '<div id="tab_maincontent_' + index + '"><select id="cc" style="width:150px"></select><div id="sp_'+index+'"><div style="color:#99BBE8;background:#fafafa;padding:5px">选择一种编码类别</div><div style="padding:10px"><input type="radio" name="lang" value="01"><span>固定</span><br><input type="radio" name="lang" value="02"><span>流水</span><br><input type="radio" name="lang" value="03"><span>字典</span><br><input type="radio" name="lang" value="04"><span>自定义</span><br></div></div><div id="tab_content"><div id="fixed_1"><h3>固定</h3><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div><div id="liushui_2"><h3>流水</h3><div class="easyui-panel" style="padding:5px"><a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a></div><div><span>流水初始值：</span><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div></div><div id="dic_3"><h3>字典</h3><table id="dg_'+index+'" class="easyui-datagrid"title="字典"style="width:600px;height:auto"data-options="iconCls: &quot;icon-edit&quot;,singleSelect: true,toolbar: &quot;#tb_'+index+'&quot;,onClickRow: onClickRow"><thead><tr><th data-options="field:&quot;attr1&quot;,width:250,editor:&quot;textbox&quot;">Key</th><th data-options="field:&quot;attr2&quot;,width:250,editor:&quot;textbox&quot;">Value</th></tr></thead></table><div id="tb_'+index+'" style="height:auto"><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-add&quot;,plain:true"onclick="appendrow()">增加</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-remove&quot;,plain:true"onclick="removeitrow()">移除</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-save&quot;,plain:true"onclick="acceptrow()">保存</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-undo&quot;,plain:true"onclick="rejectrow()">撤销</a></div></div><div id="custom_4"><h3>自定义</h3></div></div></div>',
-						closable: false
+					//'<div id="tab_maincontent_' + index + '"><select id="cc" style="width:150px"></select><div id="sp_' + index + '"><div style="color:#99BBE8;background:#fafafa;padding:5px">选择一种编码类别</div><div style="padding:10px"><input type="radio" name="lang" value="01"><span>固定</span><br><input type="radio" name="lang" value="02"><span>流水</span><br><input type="radio" name="lang" value="03"><span>字典</span><br><input type="radio" name="lang" value="04"><span>自定义</span><br></div></div><div id="tab_content"><div id="fixed_1"><h3>固定</h3><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div><div id="liushui_2"><h3>流水</h3><div class="easyui-panel" style="padding:5px"><a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a> <a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a></div><div><span>流水初始值：</span><input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px"></div></div><div id="dic_3"><h3>字典</h3><table id="dg_' + index + '" class="easyui-datagrid"title="字典"style="width:600px;height:auto"data-options="iconCls: &quot;icon-edit&quot;,singleSelect: true,toolbar: &quot;#tb_' + index + '&quot;,onClickRow: onClickRow"><thead><tr><th data-options="field:&quot;attr1&quot;,width:250,editor:&quot;textbox&quot;">Key</th><th data-options="field:&quot;attr2&quot;,width:250,editor:&quot;textbox&quot;">Value</th></tr></thead></table><div id="tb_' + index + '" style="height:auto"><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-add&quot;,plain:true"onclick="appendrow()">增加</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-remove&quot;,plain:true"onclick="removeitrow()">移除</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-save&quot;,plain:true"onclick="acceptrow()">保存</a><a href="javascript:void(0)"class="easyui-linkbutton"data-options="iconCls:&quot;icon-undo&quot;,plain:true"onclick="rejectrow()">撤销</a></div></div><div id="custom_4"><h3>自定义</h3></div></div></div>',
+					$('#table_tab').tabs('add_content', {
+						index: index,
+						content: $tab_main,
+						closable: false,
+						selected: true
 					});
-				$('#table_tab').tabs('select',index);
-						var strtemp = '#tab_maincontent_' + index;
-						$(strtemp + ' #tab_content>div').hide();
-						$(strtemp + ' #cc').combo({
-							required: true,
-							editable: false,
-							onChange: function(newvalue, oldvalue) {
-								$(strtemp + ' #tab_content>div').hide();
-								if (newvalue == '01') {
-									$(strtemp + ' #fixed_1').show();
-								}
-								if (newvalue == '02') {
-									$(strtemp + ' #liushui_2').show();
-								}
-								if (newvalue == '03') {
-									$(strtemp + ' #dic_3').show();
-								}
-								if (newvalue == '04') {
-									$(strtemp + ' #custom_4').show();
-								}
-							}
-						});
-						$('#sp_'+index).appendTo($(strtemp + ' #cc').combo('panel'));
-						$('#sp_'+index+' input').click(function() {
-							var v = $(this).val();
-							var s = $(this).next('span').text();
-							$(strtemp + ' #cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
-						});
-						index++;
-					
+					//					$('#table_tab').tabs('select', index);
+					//					var strtemp = '#tab_maincontent_' + index;
+					//					$(strtemp + ' #tab_content>div').hide();
+					//					$(strtemp + ' #cc').combo({
+					//						required: true,
+					//						editable: false,
+					//						onChange: function(newvalue, oldvalue) {
+					//							$(strtemp + ' #tab_content>div').hide();
+					//							if (newvalue == '01') {
+					//								$(strtemp + ' #fixed_1').show();
+					//							}
+					//							if (newvalue == '02') {
+					//								$(strtemp + ' #liushui_2').show();
+					//							}
+					//							if (newvalue == '03') {
+					//								$(strtemp + ' #dic_3').show();
+					//							}
+					//							if (newvalue == '04') {
+					//								$(strtemp + ' #custom_4').show();
+					//							}
+					//						}
+					//					});
+					//					$('#sp_' + index).appendTo($(strtemp + ' #cc').combo('panel'));
+					//					$('#sp_' + index + ' input').click(function() {
+					//						var v = $(this).val();
+					//						var s = $(this).next('span').text();
+					//						$(strtemp + ' #cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
+					//					});
+					index++;
 				});
 				$('#delete_btn').bind('click', function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					var length = $('#test1234').children("div.Item").length;
+					var length = $('#test1234').tabnumber('get_length', {});
 					$('#test1234').tabnumber('remove_Item', {});
 					$('#table_tab').tabs('close', length - 1);
 				});
 				$('#number_content').bind('click', function(e) {
 					e.stopPropagation();
-					$('#test1234').children("div.Item").removeClass('ttttt');
+					$('#test1234').tabnumber('set_active', {});
 				});
-				//				window.nun = $.fn.numberinput.number_input({
-				//					render_To: '#digital1',
-				//					number_of_input: 2,
-				//					validator: function(charcode) {
-				//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
-				//						else return false;
-				//					}
-				//				});
-				//				nun.numberinput.set_number_of_container.call(nun,4);
-				//				window.nun1 = $.fn.numberinput.number_input({
-				//					render_To: '#digital2',
-				//					number_of_input: 2,
-				//					validator: function(charcode) {
-				//						if (/[0-9A-Za-z]/.test(String.fromCharCode(charcode))) return true;
-				//						else return false;
-				//					}
-				//				});
 			})
 		</script>
 
@@ -216,67 +215,73 @@
 			}
 		</script>
 
-		<script type="text/javascript">
-			$('#tt').tree('selectedchanged', function(prenode, nownode) {
-				//console.log("prenode", prenode);
-				//console.log("nownode", nownode);
-			});
-		</script>
 		<script>
-		var editIndex = undefined;
-		
-		function endEditing(){
-			if (editIndex == undefined){return true}
-			if ($('#dg_'+(index1)).datagrid('validateRow', editIndex)){
-				var ed = $('#dg_'+(index1)).datagrid('getEditor', {index:editIndex});
-				//var productname = $(ed.target).combobox('getText');
-				//$('#dg_'+index).datagrid('getRows')[editIndex]['productname'] = productname;
-				$('#dg_'+(index1)).datagrid('endEdit', editIndex);
-				editIndex = undefined;
-				return true;
-			} else {
-				return false;
-			}
-		}
-		function onClickRow(index){
-			if (editIndex != index){
-				if (endEditing()){
-					$('#dg_'+(window.index1)).datagrid('selectRow', index)
-							.datagrid('beginEdit', index);
-					editIndex = index;
-				} else {
-					$('#dg_'+(window.index1)).datagrid('selectRow', editIndex);
-				}
-			}
-		}
-		function appendrow(){
-			console.log(index1)
-			if (endEditing()){
-				$('#dg_'+(index1)).datagrid('appendRow',{});
-				editIndex = $('#dg_'+(index1)).datagrid('getRows').length-1;
-				$('#dg_'+(index1)).datagrid('selectRow', editIndex)
-						.datagrid('beginEdit', editIndex);
-			}
-		}
-		function removeitrow(){
-			if (editIndex == undefined){return}
-			$('#dg_'+(index1)).datagrid('cancelEdit', editIndex)
-					.datagrid('deleteRow', editIndex);
-			editIndex = undefined;
-		}
-		function acceptrow(){
-			if (endEditing()){
-				$('#dg_'+(index1)).datagrid('acceptChanges');
-			}
-		}
-		function rejectrow(){
-			$('#dg_'+(index1)).datagrid('rejectChanges');
-			editIndex = undefined;
-		}
-		function getChanges(){
-			var rows = $('#dg_'+(index1)).datagrid('getChanges');
-			alert(rows.length+' rows are changed!');
-		}
+						var editIndex = undefined;
+			
+						function endEditing() {
+							if (editIndex == undefined) {
+								return true
+							}
+							if ($('#dg_' + (index1)).datagrid('validateRow', editIndex)) {
+								var ed = $('#dg_' + (index1)).datagrid('getEditor', {
+									index: editIndex
+								});
+								//var productname = $(ed.target).combobox('getText');
+								//$('#dg_'+index).datagrid('getRows')[editIndex]['productname'] = productname;
+								$('#dg_' + (index1)).datagrid('endEdit', editIndex);
+								editIndex = undefined;
+								return true;
+							} else {
+								return false;
+							}
+						}
+			
+						function onClickRow(index) {
+							if (editIndex != index) {
+								if (endEditing()) {
+									$('#dg_' + (window.index1)).datagrid('selectRow', index)
+										.datagrid('beginEdit', index);
+									editIndex = index;
+								} else {
+									$('#dg_' + (window.index1)).datagrid('selectRow', editIndex);
+								}
+							}
+						}
+			
+						function appendrow() {
+							console.log(index1)
+							if (endEditing()) {
+								$('#dg_' + (index1)).datagrid('appendRow', {});
+								editIndex = $('#dg_' + (index1)).datagrid('getRows').length - 1;
+								$('#dg_' + (index1)).datagrid('selectRow', editIndex)
+									.datagrid('beginEdit', editIndex);
+							}
+						}
+			
+						function removeitrow() {
+							if (editIndex == undefined) {
+								return
+							}
+							$('#dg_' + (index1)).datagrid('cancelEdit', editIndex)
+								.datagrid('deleteRow', editIndex);
+							editIndex = undefined;
+						}
+			
+						function acceptrow() {
+							if (endEditing()) {
+								$('#dg_' + (index1)).datagrid('acceptChanges');
+							}
+						}
+			
+						function rejectrow() {
+							$('#dg_' + (index1)).datagrid('rejectChanges');
+							editIndex = undefined;
+						}
+			
+						function getChanges() {
+							var rows = $('#dg_' + (index1)).datagrid('getChanges');
+							alert(rows.length + ' rows are changed!');
+						}
 		</script>
 	</body>
 
