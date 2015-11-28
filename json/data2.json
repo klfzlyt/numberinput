@@ -1,0 +1,73 @@
+[{
+	"id":1,
+	"text":"01",
+	"rule":[],
+	"children":[
+	{
+		"id":11,
+		"text":"11",
+		"rule":[{
+			"name":"1111111",
+			"data":{
+				"length":2,
+				"content":{
+					"property":"fix",
+					"value":"GB"
+				}
+			}
+		},{
+			"name":"2222222",
+			"data":{
+				"length":4,
+				"content":{
+					"property":"dic",
+					"value":[
+						{"key":"1~","value":"2~"},
+						{"key":"11~","value":"22~"}
+					
+					
+					]
+				
+				}
+			
+			}
+		
+		},{
+			"name":"333333",
+			"data":{
+				"length":8,
+				"content":{
+					"property":"flu",
+					"value":{
+						"type":"nubmer",
+						"content":"32131"
+					
+					}
+				
+				
+				
+				}
+			
+			
+			}
+		
+		}],
+		"children":[]
+	}
+	
+	
+	
+	]
+
+}
+
+
+
+
+
+
+
+
+
+
+]

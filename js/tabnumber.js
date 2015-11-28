@@ -30,15 +30,17 @@
 	};
 	$.fn.tabnumber.default.callbacks={
 		onadd:function(item){},
-		onclick:function(item){}
+		onclick:function(item){},
+		onchange:function(item){}
 	};
 	$.fn.tabnumber.methods = {};
 	$.extend($.fn.tabnumber.methods, {
 		add_Item: function(setting) {
+				var indexx=$.fn.tabnumber.methods['get_length'].call(this,setting);
 			var param = $.extend({
 				activeclassName:'ttttt',
 				length:1,
-				index:0
+				index:indexx
 			}, setting);
 			if(param.length<=0)return;
 			var THIs = this;
@@ -79,6 +81,11 @@
 				value:param.length,
 				onChange: function(old, newvalue) {					
 						numberinput_1.numberinput.set_number_of_container.call(numberinput_1,old);
+						var _param={};
+						_param.index=param.index;
+						_param.value=old;
+							THIs.data('tabnumber').onupdate.call(this,_param);
+						
 				}
 			});
 			container.appendTo(THIs);

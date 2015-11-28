@@ -40,7 +40,7 @@
 						</div>
 						<div>
 							<span>流水初始值： </span>
-							<input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px;">
+							<input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;流水初始值...&quot;" style="width:250px;height:40px;">
 						</div>
 					</div>
 					<div id="dic_3">
@@ -112,6 +112,21 @@
 							var s = $(this).next('span').text();
 							$('#cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
 						});
+						$('.easyui-textbox').textbox({
+							onChange:function(newvalue,oldvalue){
+								//console.log(newvalue);	
+								var selected_input=$(this);
+								var default_index = container.tabs('getTabIndex', ob.tabs('getSelected'));
+								var param={};
+								param.index=default_index;
+								param.data={};
+								param.data.type=$('#cc').combo('getValue');
+								param.data.value=newvalue;
+								container.data('tabs').options.onupdate_content.call(selected_input,param);
+							}														
+						});
+						
+						
 					});
 				</script>
 				<script>
