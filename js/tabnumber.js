@@ -9,7 +9,8 @@
 			var param = $.extend({
 				render_To: this,
 				input_width: 300,
-				activeclass: "tabnumber_activeclass"
+				activeclass: "tabnumber_activeclass",
+				rules:[0]
 			}, setting);								
 			var property_data=$.extend({},this.tabnumber.default.property,this.tabnumber.default.callbacks,param);
 			

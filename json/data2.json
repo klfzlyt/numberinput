@@ -7,20 +7,19 @@
 		"id":11,
 		"text":"11",
 		"rule":[{
-			"name":"1111111",
+			"name":"fix",
 			"data":{
 				"length":2,
 				"content":{
-					"property":"fix",
 					"value":"GB"
 				}
 			}
 		},{
-			"name":"2222222",
+			"name":"dic",
 			"data":{
-				"length":4,
+				"length":3,
 				"content":{
-					"property":"dic",
+				
 					"value":[
 						{"key":"1~","value":"2~"},
 						{"key":"11~","value":"22~"}
@@ -33,11 +32,11 @@
 			}
 		
 		},{
-			"name":"333333",
+			"name":"flu",
 			"data":{
-				"length":8,
+				"length":2,
 				"content":{
-					"property":"flu",
+			
 					"value":{
 						"type":"nubmer",
 						"content":"32131"
@@ -53,8 +52,58 @@
 		
 		}],
 		"children":[]
+	},
+	{
+		"id":112,
+		"text":"111111",
+		"rule":[{
+			"name":"fix",
+			"data":{
+				"length":2,
+				"content":{
+					
+					"value":"GB111"
+				}
+			}
+		},{
+			"name":"dic",
+			"data":{
+				"length":4,
+				"content":{
+					
+					"value":[
+						{"key":"1~11","value":"2~"},
+						{"key":"11~11","value":"22~"}
+					
+					
+					]
+				
+				}
+			
+			}
+		
+		},{
+			"name":"flu",
+			"data":{
+				"length":8,
+				"content":{
+				
+					"value":{
+						"type":"nubmer",
+						"content":"32111131"
+					
+					}
+				
+				
+				
+				}
+			
+			
+			}
+		
+		}],
+		"children":[]
 	}
-	
 	
 	
 	]

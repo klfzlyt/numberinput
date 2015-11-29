@@ -40,7 +40,7 @@
 				//直接触发选择要好一点
 				//字典是3号
 					$('#cc_'+param.index).combo('setValue', '03').combo('setText', "字典").combo('hidePanel');
-					$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'03','03');
+					//$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'03','03');
 					var arryofdic=param.data.data.content.value;
 					for(var i=0;i<arryofdic.length;i++){
 						$('#dg_'+param.index).datagrid('appendRow',{attr1:arryofdic[i].key,attr2:arryofdic[i].value});							
@@ -48,18 +48,18 @@
 			}
 			if(param.data.name=="fix"){
 				$('#cc_'+param.index).combo('setValue', '01').combo('setText', "固定").combo('hidePanel');
-					$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'01','01');
+					//$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'01','01');
 				$('#fix_input_'+param.index).textbox('setValue',param.data.data.content.value);				
 			}
-			if(param.data.name=='fluen'){				
+			if(param.data.name=='flu'){				
 				$('#cc_'+param.index).combo('setValue', '02').combo('setText', "流水").combo('hidePanel');
-					$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'02','02');
+					//$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'02','02');
 					$('#flu_input_'+param.index).textbox('setValue',param.data.data.content.value.content);
 					//TODO还需要选择一个日期   纯数字 混合
 			}
 			if(param.data.name=="custom"){
 					$('#cc_'+param.index).combo('setValue', '04').combo('setText', "自定义").combo('hidePanel');
-					$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'04','04');
+					//$('#cc_'+param.index).data('combo').options.onChange.call($('#cc_'+param.index),'04','04');
 				
 			}
 			

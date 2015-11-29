@@ -20,34 +20,7 @@
 		<div class="easyui-layout" style="width:100%;height:550px;">
 			<div data-options="region:'west'" title="rule_tree" style="width:30%;padding:10px">
 				<div class="easyui-panel" style="padding:5px">
-					<ul id="tt" class="easyui-tree" data-options="
-							url: './json/data2.json',
-							method: 'get',
-							animate: true,
-							dnd:false,
-							lines:true,
-							onContextMenu: function(e,node){
-								e.preventDefault();
-								$(this).tree('select',node.target);
-								$('#mm').menu('show',{
-									left: e.pageX,
-									top: e.pageY
-								});
-							},
-							formatter:function(node){
-						var s = node.text;
-						if (node.children){//这里可能要做一些兼容性处理
-							s += ' <span style=\'color:blue\'>(' + node.children.length + ')</span>';
-						}
-						return s;
-						},
-						onClick: function(node){
-				//	$(this).tree('beginEdit',node.target);
-				},
-				onSelect:function(node){
-					//alert(node.text)
-				}
-						"></ul>
+					<ul id="tt" class="easyui-tree" ></ul>
 					<div id="mm" class="easyui-menu" style="width:120px;">
 						<div onclick="append_slingber()" data-options="iconCls:'icon-add'">同一级增加</div>
 						<div onclick="append()" data-options="iconCls:'icon-add'">下一级增加</div>
@@ -82,9 +55,10 @@
 		</div>
 	
 		<script language="javascript" type="text/javascript" src="js/boot.js"></script>
+		<script language="javascript" type="text/javascript" src="js/tabs.js"></script>
 		<script language="javascript" type="text/javascript" src="js/tabnumber.js"></script>
 		<script language="javascript" type="text/javascript" src="js/tree.js"></script>
-		<script language="javascript" type="text/javascript" src="js/tabs.js"></script>
+		
 		<script language="javascript" type="text/javascript">
 			$(document).ready(function() {
 				selected_index = 0;				
@@ -92,7 +66,9 @@
 				  url: "tabcontent.html",
 				  async: false
 				}).responseText; 
-				$tab_main=$tab_main.replace('none','block');				
+				$tab_main=$tab_main.replace('none','block');	
+				
+				
 				$('#table_tab').tabs({
 					fit: true,
 					onSelect: function(title, index12) {
