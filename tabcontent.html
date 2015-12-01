@@ -33,7 +33,7 @@
 			</div>
 			<div id="dic_3">
 				<h3>字典</h3>
-				<table id="dg" class="easyui-datagrid" title="字典" style="width:600px;height:auto" data-options="
+				<table id="dg" class="easyui-datagrid" title="字典" style="width:550px;height:auto" data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,
 				toolbar: '#tb',
@@ -70,6 +70,10 @@
 				<h3>自定义</h3>
 
 			</div>
+		</div>
+		
+		<div style="float: right;margin-right: 450px;">
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" style="width:80px">Save</a>
 		</div>
 		<script type="text/javascript">
 			function tabcontent_script(container) {
@@ -128,6 +132,7 @@
 						}
 					}
 				});
+				$('#cc').combo('setValue', '01').combo('setText', '固定').combo('hidePanel');
 				$('#sp').appendTo($('#cc').combo('panel'));
 				$('#sp input').bind('click', function(e) {
 					e.preventDefault();

@@ -25,6 +25,10 @@ function append() {
 function removeit() {
 	var node = $('#tt').tree('getSelected');
 	$('#tt').tree('remove', node.target);
+	var tab = $('#tt').data('tree').options.tabs;
+	var input_number = $('#tt').data('tree').options.input_number;
+	tab.tabs('close_all');
+	input_number.tabnumber('clear_all');
 }
 
 function collapse() {
@@ -52,6 +56,8 @@ function expand() {
 		lines: true,
 		tabs: $('#table_tab'),
 		input_number: $('#test1234'),
+		currentnode: {},
+		lastselect_node: {},
 		onContextMenu: function(e, node) {
 			e.preventDefault();
 			$(this).tree('select', node.target);
@@ -72,6 +78,27 @@ function expand() {
 		},
 		onSelect: function(node) {
 			var ob = $(this);
+			ob.data('tree').options.lastselect_node = ob.data('tree').options.currentnode;
+			ob.data('tree').options.currentnode = node;
+			if (node == ob.data('tree').options.lastselect_node) return;
+			ob.data('tree').options.onSelect_old.call(this, ob.data('tree').options.lastselect_node, node);
+		},
+		onAfterEdit: function(node) {
+
+			alert(node.text);
+		},
+		onUpdate_rule: function(node) {
+			var rule = node.rule;
+			//TODO
+			//想办法给node.rule增加一些新的值
+		},
+		//pram:oldnode 上次选中的node
+		//pram:newnode 本次选中的node
+		onSelect_old: function(oldnode, newnode) {
+			var ob = $(this);
+			ob.tree('update_node', {
+				node: oldnode
+			});
 			var $tab_main = $.ajax({
 				url: "./tabcontent.html",
 				async: false
@@ -81,51 +108,17 @@ function expand() {
 			var input_number = ob.data('tree').options.input_number;
 			tab.tabs('close_all');
 			input_number.tabnumber('clear_all');
-			var noderule = node.rule;
-			var rule_input_number = [];
-			tab.tabs({
-				fit: true,
-				onSelect: function(title, index12) {
-					input_number.tabnumber('set_active', {
-						index: index12
-					});
-				},
-				onupdate_content: function(setting) {
-					var changed_object = this;
-					console.log("index: " + setting.index + " selecttype:" + setting.data.type + " datavaule: " + setting.data.value);
-				}
-			});
+			var noderule = newnode.rule;
 			for (var i = 0; i < noderule.length; i++) {
-				rule_input_number.push(noderule[i].data.length);
+				input_number.tabnumber('add_Item', {
+					length: noderule[i].data.length
+				});
 				tab.tabs('add_content', {
 					content: $tab_main,
 					data: noderule[i]
 				});
 			}
-			input_number.tabnumber({
-				rules: rule_input_number,
-				width: 400,
-				onclick: function(e) {
-					tab.tabs('select', e);
-				},
-				onupdate: function(e) {
-					console.log("index: " + e.index + " value: " + e.value);
-				}
-			});
 
-
-			//step1 :save
-
-
-			//step2: change
-
-
-
-			//alert(node.text)
-		},
-		onAfterEdit: function(node) {
-
-			alert(node.text);
 		}
 	});
 
@@ -140,14 +133,70 @@ function expand() {
 			norwselect = $jq.tree('getSelected');
 			callback(preselect, nowselect);
 		},
+		//以数组形式存入某node的父元素
 		getparents: function(ob, param) {
+			var targetnode = param.node;
+			var result = [];
+			//回溯法递归获得
+			function backtrace(root, target, ans) {
+				if (root == undefined) return false;
+				if (root == target) {
+					return true;
+				}
+				for (var i = 0; i < root.children.length; i++) {
+					ans.push(root);
+					var bools = backtrace(root.children[i], target, ans);
+					if (bools) return true;
+					ans.pop();
+				}
+			};
+			backtrace(ob.tree('getRoot'), targetnode, result);
 
-
+			return result;
 		},
 		get_json_str: function(ob, param) {
-			var tab = ob.tree('data').options.tabs;
-			var input_number = ob.tree('data').options.input_number;
+			var currentselected = ob.tree('getSelected');
+			ob.tree('update_node', {
+				node: currentselected
+			});
+			//然后开始从根遍历 
+			var rootnode = ob.tree('getRoot');
+			return JSON.stringify(rootnode);
+		},
+		//根据用户更新的规则，更新node的rule
+		update_node: function(ob, param) {
+			var node = param.node;
+			//如果没有rule return 有rule的话一定是[]
+			if (!node.rule) return;
+			var tab = ob.data('tree').options.tabs;
+			var input_number = ob.data('tree').options.input_number;
+			var tabs_rules = tab.tabs('get_rules');
+			var input_rules = input_number.tabnumber('get_rules');
+			var new_arr = [];
+			for (var i = 0; i < input_rules.length; i++) {
+				var objec_temp = {};
+				objec_temp.name = tabs_rules[i].name;
+				objec_temp.data = {};
+				objec_temp.data.length = input_rules[i];
+				objec_temp.data.content = {};
+				if (objec_temp.name == 'fix') {
+					objec_temp.data.content.value = tabs_rules[i].data;
+				}
+				if (objec_temp.name == 'dic') {
+					objec_temp.data.content.value = tabs_rules[i].data;
 
+				}
+				if (objec_temp.name == 'flu') {
+					objec_temp.data.content.value = {};
+					objec_temp.data.content.value.type = "";
+					objec_temp.data.content.value.content = tabs_rules[i].data;
+				}
+				if (objec_temp.name == 'custom') {
+
+				}
+				new_arr.push(objec_temp);
+			}
+			node.rule = new_arr;
 		}
 
 
