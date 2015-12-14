@@ -6,13 +6,23 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="http://www.jeasyui.net/Public/js/easyui/themes/icon.css">
+		
 	</head>
 	<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="js/easyui.js"></script>
 	<body>
 		<div>
-			<div id="tab_maincontent" style="display: block;">
-				<select id="cc" style="width:150px"></select>
+			<div id="tab_maincontent" style="display: block;margin: 0 auto;width: 400px;font-family: '微软雅黑';">
+				<div style="margin-top: 10px;">
+					<span>规则名：</span>
+					<input type="text" class="easyui-validatebox" data-options="required:true,validType:'email'"/>
+					
+				</div>
+	
+				<div style="margin: 20px 0;">
+				<span style="margin: 20px 0;">规则属性：</span>
+				<select id="cc" style="width:150px;"></select>
+				</div>
 				<div id="sp">
 					<div>选择一种类型</div>
 					<div style="padding:10px">
@@ -25,14 +35,14 @@
 						<input type="radio" name="lang" value="04" class="input_t"><span>自定义</span>
 					</div>
 				</div>
-				<div id="tab_content">
+				<div id="tab_content" class='easyui-panel' title="规则内容" style="margin: 15px 0;width:530px;">
 					<div id="fixed_1">
-						<h3>固定</h3>
+				
 						<input class="easyui-textbox" data-options="iconCls:&quot;icon-help&quot;,iconWidth:28,prompt:&quot;固定...&quot;" style="width:250px;height:40px;">
 					</div>
-					<div id="liushui_2">
-						<h3>流水</h3>
-						<div class="" style="padding:5px;">
+					<div id="liushui_2" style="">
+					
+						<div class="" style="padding:5px;border: 1px solid black;">
 							<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字型</a>
 							<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">数字字母型</a>
 							<a href="#" class="easyui-linkbutton" data-options="toggle:true,group:&quot;g2&quot;,plain:true">日期型</a>
@@ -44,8 +54,8 @@
 						</div>
 					</div>
 					<div id="dic_3">
-						<h3>字典</h3>
-						<table id="dg" class="easyui-datagrid" title="字典" style="width:600px;height:auto" data-options="
+					
+						<table id="dg" class="easyui-datagrid" title="规则字典" style="width:520px;height:auto" data-options="
 				iconCls: 'icon-edit',
 				singleSelect: true,
 				toolbar: '#tb',
@@ -78,9 +88,13 @@
 						</div>
 					</div>
 					<div id="custom_4">
-						<h3>自定义</h3>
+					
 
 					</div>
+				</div>
+				<div style="margin-top: 10px;">
+					<div>备注：</div>
+					<input class="easyui-textbox" data-options="multiline:true" value="This TextBox will allow the user to enter multiple lines of text." style="width:300px;height:100px">
 				</div>
 				<script type="text/javascript">
 					$(function() {
